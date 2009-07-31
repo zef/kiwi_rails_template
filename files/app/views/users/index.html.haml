@@ -1,0 +1,26 @@
+- if current_user.has_role?('admin')
+  = link_to "Create new user", new_user_path
+  &bull;
+  = link_to "View login stats", '#view_login_stats', :id => "show_login_stats"
+  %br
+
+%br
+- for user in @active_users
+  = render :partial => 'user', :locals => { :user => user }
+
+%br
+= link_to_function "Show disabled users", :id => 'show_disabled_users'
+%br
+#disabled_users{ :style => "display:none;" }
+  - for user in @disabled_users
+    = render :partial => 'user', :locals => { :user => user }
+
+:javascript
+  jQuery(document).ready(function($) {
+    $("a#show_login_stats").click(function() {
+      $('.login_stats').slideToggle();
+    })
+    $("a#show_disabled_users").click(function() {
+      $('#disabled_users').slideToggle();
+    })
+  });

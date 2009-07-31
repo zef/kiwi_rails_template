@@ -1,0 +1,10 @@
+<%= error_messages_for :user %>
+<strong>Creating new user</strong><br /><br />
+
+<% form_for @user, :url => users_path do |f| -%>
+
+<%= render :partial => 'fields', :locals => { :f => f } %>
+
+<br />
+<%= submit_tag 'Sign up' %>
+<% end -%>

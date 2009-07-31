@@ -1,0 +1,9 @@
+<%= error_messages_for :user %>
+<strong>Editing info for <%= @user.login %></strong><br /><br />
+
+<% form_for @user do |f| -%>
+<%= render :partial => 'fields', :locals => { :f => f } %>
+
+<br />
+<%= submit_tag 'Update user' %>
+<% end -%>
