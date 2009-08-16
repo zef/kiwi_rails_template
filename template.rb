@@ -4,8 +4,8 @@
 # When you create your first user, to make them an admin:
 # User.first.has_role!('admin')
 
-# rails [app_name] -m rails_template/template.rb
-# rails [app_name] -d mysql -m rails_template/template.rb
+# rails [app_name] -m kiwi_rails_template/template.rb
+# rails [app_name] -d mysql -m kiwi_rails_template/template.rb
 
 run "rm public/index.html"
 run "rm public/robots.txt"
@@ -45,11 +45,11 @@ db/*.sqlite3
 }
 # config/database.yml
 
-FileUtils.cp_r "#{@root}/../rails_template/files/.", @root
+FileUtils.cp_r "#{@root}/../kiwi_rails_template/files/.", @root
 
 run 'annotate -p after'
 
-rake 'db:drop' # delete this later...
+rake 'db:drop'
 rake 'db:create'
 rake 'open_id_authentication:db:create'
 rake 'db:migrate'
