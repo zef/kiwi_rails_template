@@ -8,8 +8,11 @@ class UsersController < ApplicationController
   end
 
   def index
-    @active_users = User.active
-    @disabled_users = User.disabled
+    if params[:disabled]
+      @users = User.disabled
+    else
+      @users = User.active
+    end
   end
 
   def new
@@ -17,12 +20,15 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(filtered_params(params[:user]))
-    if @user.save
-      flash[:notice] = "User was successfully created"
-      redirect_to edit_user_path(@user)
-    else
-      render :action => 'new'
+    @user = User.new(params[:user])
+    # @user = User.new(filtered_params(params[:user]))
+    @user.save do |result|
+      if result
+        flash[:notice] = "User was successfully created"
+        redirect_to edit_user_path(@user)
+      else
+        render :action => 'new'
+      end
     end
   end
 
@@ -32,16 +38,18 @@ class UsersController < ApplicationController
 
   def update
     get_authorized_user
-
-    if @user.update_attributes(filtered_params(params[:user]))
-      flash[:notice] = 'User info was successfully updated.'
-      if current_user.has_role?("admin")
-        redirect_to users_path
+    @user.attributes = filtered_params(params[:user])
+    @user.save do |result|
+      if result
+        flash[:notice] = 'User info was successfully updated.'
+        if current_user.has_role?("admin")
+          redirect_to users_path
+        else
+          redirect_to root_path
+        end
       else
-        redirect_to root_path
+        render :action => "edit"
       end
-    else
-      render :action => "edit"
     end
   end
 
@@ -49,7 +57,7 @@ class UsersController < ApplicationController
 
   def get_authorized_user
     if current_user.has_role?("admin")
-      @user = User.find(params[:id]) || current_user
+      @user = params[:id] ? User.find(params[:id]) : current_user
     else
       @user = current_user
     end

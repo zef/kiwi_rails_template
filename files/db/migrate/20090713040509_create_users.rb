@@ -2,10 +2,13 @@ class CreateUsers < ActiveRecord::Migration
   def self.up
     create_table :users do |t|
       t.string   :login, :email, :comment, :last_name, :first_name,
+                 :openid_identifier,
                  :last_login_ip, :current_login_ip, :persistence_token
+
       t.boolean  :active, :default => true
-      t.string   :crypted_password,    :limit => 128, :default => "", :null => false
-      t.string   :password_salt,       :limit => 128, :default => "", :null => false
+      t.string   :crypted_password,    :limit => 128, :default => "", :null => true
+      t.string   :password_salt,       :limit => 128, :default => "", :null => true
+
       t.string   :single_access_token,                :default => "", :null => false
       t.integer  :login_count,                        :default => 0,  :null => false
       t.integer  :failed_login_count,                 :default => 0,  :null => false
@@ -26,6 +29,8 @@ class CreateUsers < ActiveRecord::Migration
 
     add_index "roles_users", ["role_id"], :name => "index_roles_users_on_role_id"
     add_index "roles_users", ["user_id"], :name => "index_roles_users_on_user_id"
+
+    add_index :users, :openid_identifier
 
     add_index "users", ["login"], :name => "index_users_on_login"
     add_index "users", ["persistence_token"], :name => "index_users_on_remember_token"

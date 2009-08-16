@@ -1,7 +1,3 @@
-= f.label :login
-%br
-= f.text_field :login, :size => 14, :class => 'first_focus'
-%br
 
 .left
   = f.label :first_name
@@ -11,35 +7,55 @@
   = f.label :last_name
   %br
   = f.text_field :last_name, :size => 16
-.clearFloat
-= f.label :email
-%br
-= f.text_field :email, :size => 30
-%br
-= f.label :password
-%br
-= f.password_field :password, :size => 24
-%br
-= f.label :password_confirmation, "Confirm Password"
-%br
-= f.password_field :password_confirmation, :size => 24
-%br
-%label
-  Leave blank unless you want to change your password.
-%br
-%br
-- if logged_in? && current_user.has_role?("admin")
-  %label
-    Roles:
-  %br
-  - # delete this later, lets you unassign all roles, change this later...
-  = hidden_field_tag 'user[user_roles][]', ""
-  - for role in USER_ROLES
-    = check_box_tag 'user[user_roles][]', role, @user.has_role?(role, false), :id => "user_role_#{role}"
-    = label_tag "user_role_#{role}", role.humanize
-    %br
+.clear_float
 
+%div
+  = f.label :email
   %br
-  = f.check_box :active
-  = f.label :active, 'Active?'
+  = f.text_field :email, :size => 30
+
+%br
+
+= f.label :login
+%br
+= f.text_field :login, :size => 14, :class => 'first_focus'
+%br
+%div
+  = f.label :password
   %br
+  = f.password_field :password, :size => 24
+%div
+  = f.label :password_confirmation, "Confirm Password"
+  %br
+  = f.password_field :password_confirmation, :size => 24
+  %br
+  %label
+    Leave blank unless you want to change your password.
+
+%br
+
+
+%div
+  = f.label :openid_identifier, "OpenID URL"
+  %br
+  = f.text_field :openid_identifier, :size => 50
+
+
+
+
+%div
+  - if logged_in? && current_user.has_role?("admin")
+    %label
+      Roles:
+    %br
+    - # delete this later, lets you unassign all roles, change this later...
+    = hidden_field_tag 'user[user_roles][]', ""
+    - for role in USER_ROLES
+      = check_box_tag 'user[user_roles][]', role, @user.has_role?(role, false), :id => "user_role_#{role}"
+      = label_tag "user_role_#{role}", role.humanize
+      %br
+
+    %br
+    = f.check_box :active
+    = f.label :active, 'Active?'
+    %br

@@ -2,45 +2,42 @@
 %html{ "xml:lang" => "en", :lang => "en", :xmlns => "http://www.w3.org/1999/xhtml" }
   %head
     %meta{ :content => "text/html;charset=UTF-8", "http-equiv" => "content-type" }
-    %title set_window_title
+    / %title
 
-    = stylesheet_link_tag 'reset', 'utility'#, 'main', '960'
-    = # stylesheet_link_tag '/javascripts/themes/cupertino/jquery-ui-1.7.1.custom.css'
+    = stylesheet_link_tag 'compiled/utility', 'compiled/main'
 
     = javascript_include_tag 'jquery-1.3.2.min'
     = javascript_include_tag :defaults
 
-    =# javascript_include_tag 'jquery.inspect' if RAILS_ENV == "development"
-
     = yield :head
   %body
-    - flash.each do |name, message|
-      = content_tag :div, message, :class => "flash_#{name}"
-      .clearFloat
-
     #container
+      - flash.each do |name, message|
+        = content_tag :div, message, :class => "flash_#{name}"
+        .clear_float
       #header
         #user_navigation
-          %ul
-            - if logged_in?
-              %li
-                You are signed in as
-                = current_user.login
-                = link_to 'Edit Your Profile', edit_profile_path
-              %li= link_to 'Sign Out', sign_out_path
-            - else
-              %li= link_to 'Sign In', sign_in_path
-              %li= link_to 'Sign Up', sign_up_path
+          .right
+            %ul
+              - if logged_in?
+                %li
+                  You are signed in as
+                  = current_user.login
+                  = link_to 'Edit Your Profile', edit_profile_path
+                %li= link_to 'Sign Out', sign_out_path
+              - else
+                %li= link_to 'Sign In', sign_in_path
+                %li= link_to 'Sign Up', sign_up_path
+        .clear_float
 
         #navigation
           %ul
             %li
 
-        #contentArea
-          = yield
-          .clearFloat
-          %br
-        .clearFloat
-        .push
+      #content_area
+        = yield
+        .clear_float
+        %br
+
       #footer
         #footerContent

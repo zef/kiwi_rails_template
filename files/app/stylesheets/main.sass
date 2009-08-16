@@ -1,0 +1,32 @@
+
+@import compass/utilities.sass
+//@import compass/utilities/general/reset.sass
+@import 960/text.sass
+@import 960/grid.sass
+
++global-reset
++text
+
+*:focus
+  :outline #4F7099 auto 5px
+
+// !ninesixty_columns = 16
+#container
+  +grid-container
+
+#user_navigation
+  +grid(6)
+  +grid-prefix(6)
+  :text-align right
+
+  ul
+    +horizontal-list(8px)
+
+#navigation
+  ul
+    +horizontal-list(6px)
+
+input#user_openid_identifier, input#user_session_openid_identifier
+  :background #fff url(http://openid.net/images/login-bg.gif) no-repeat 2px 0
+  :padding-left 20px
+
