@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
         logger.debug { "----- should have role: #{role}" }
         self.has_role!(role)
       else
-        self.has_no_role!(role) if has_role?(role, false)
+        self.has_no_role!(role) if has_role?(role)
       end
     end
   end

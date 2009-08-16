@@ -6,7 +6,7 @@
     )
   %br
   = user.roles.map { |r| r.name.humanize }.join(', ')
-  - if logged_in? and current_user.has_role('admin')
+  - if logged_in? and current_user.has_role?('admin')
     %br
     .login_stats{ :style => "display:none;" }
       %table.list

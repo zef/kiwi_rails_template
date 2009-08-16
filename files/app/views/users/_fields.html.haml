@@ -51,7 +51,7 @@
     - # delete this later, lets you unassign all roles, change this later...
     = hidden_field_tag 'user[user_roles][]', ""
     - for role in USER_ROLES
-      = check_box_tag 'user[user_roles][]', role, @user.has_role?(role, false), :id => "user_role_#{role}"
+      = check_box_tag 'user[user_roles][]', role, @user.has_role?(role), :id => "user_role_#{role}"
       = label_tag "user_role_#{role}", role.humanize
       %br
 

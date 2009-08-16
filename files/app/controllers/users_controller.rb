@@ -2,8 +2,7 @@ class UsersController < ApplicationController
 
   access_control do
     allow :admin
-    allow all, :to => [ :edit, :update ]
-    deny anonymous, :except => [ :new, :create ]
+    allow logged_in, :to => [ :edit, :update ]
     allow anonymous, :to => [ :new, :create ]
   end
 
