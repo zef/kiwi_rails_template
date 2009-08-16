@@ -8,10 +8,11 @@ class UsersController < ApplicationController
 
   def index
     if params[:disabled]
-      @users = User.disabled
+      users = User.disabled
     else
-      @users = User.active
+      users = User.active
     end
+    @users = users.paginate(:page => params[:page])
   end
 
   def new

@@ -10,6 +10,8 @@
   = link_to "Disabled users", users_path(:disabled => true)
   %br
 
+= will_paginate(@users)
+
 %br
 - for user in @users
   = render :partial => 'user', :locals => { :user => user }
