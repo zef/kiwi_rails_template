@@ -3,14 +3,15 @@ class User < ActiveRecord::Base
     c.merge_validates_length_of_email_field_options :allow_blank => true
     c.merge_validates_format_of_email_field_options :allow_blank => true
     c.merge_validates_uniqueness_of_email_field_options :allow_blank => true
+    c.openid_required_fields = [:nickname, :email]
   end
 
   acts_as_authorization_subject
 
-  attr_accessible :login, :password, :password_confirmation, :openid_identifier, :first_name, :last_name, :email, :status, :active
+  attr_accessible :username, :password, :password_confirmation, :openid_identifier, :first_name, :last_name, :email, :status, :active
 
-  named_scope :active, :conditions => ["users.active = true"]
-  named_scope :disabled, :conditions => ["users.active = false"]
+  named_scope :active, :conditions => { :active => true }
+  named_scope :disabled, :conditions => { :active => false }
 
   def full_name
     "#{first_name last_name}"
@@ -41,31 +42,11 @@ class User < ActiveRecord::Base
       end
     end
   end
-end
-# == Schema Information
-#
-# Table name: users
-#
-#  id                  :integer(4)      not null, primary key
-#  login               :string(255)
-#  email               :string(255)
-#  comment             :string(255)
-#  last_name           :string(255)
-#  first_name          :string(255)
-#  openid_identifier   :string(255)
-#  last_login_ip       :string(255)
-#  current_login_ip    :string(255)
-#  persistence_token   :string(255)
-#  active              :boolean(1)      default(TRUE)
-#  crypted_password    :string(128)     default("")
-#  password_salt       :string(128)     default("")
-#  single_access_token :string(255)     default(""), not null
-#  login_count         :integer(4)      default(0), not null
-#  failed_login_count  :integer(4)      default(0), not null
-#  last_request_at     :datetime
-#  last_login_at       :datetime
-#  current_login_at    :datetime
-#  created_at          :datetime
-#  updated_at          :datetime
-#
 
+  private
+
+  def map_openid_registration(registration)
+    self.email = registration["email"] if email.blank?
+    self.username = registration["nickname"] if username.blank?
+  end
+end

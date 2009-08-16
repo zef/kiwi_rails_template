@@ -2,7 +2,7 @@
 
 %h1
   Editing info for
-  = @user.login
+  = @user.username
 
 - form_for @user do |f|
   = render :partial => 'fields', :locals => { :f => f }

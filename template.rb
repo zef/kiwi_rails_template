@@ -4,8 +4,11 @@
 # When you create your first user, to make them an admin:
 # User.first.has_role!('admin')
 
+# If you have an existing database with the default name created by rails (app_name_development), it will get dropped.
+
 # rails [app_name] -m kiwi_rails_template/template.rb
 # rails [app_name] -d mysql -m kiwi_rails_template/template.rb
+# cd .. && rm -rf test && rails test -m kiwi_rails_template/template.rb && cd test/ && script/server
 
 run "rm public/index.html"
 run "rm public/robots.txt"

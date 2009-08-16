@@ -1,7 +1,7 @@
 class CreateUsers < ActiveRecord::Migration
   def self.up
     create_table :users do |t|
-      t.string   :login, :email, :comment, :last_name, :first_name,
+      t.string   :username, :email, :comment, :last_name, :first_name,
                  :openid_identifier,
                  :last_login_ip, :current_login_ip, :persistence_token
 
@@ -32,14 +32,14 @@ class CreateUsers < ActiveRecord::Migration
 
     add_index :users, :openid_identifier
 
-    add_index "users", ["login"], :name => "index_users_on_login"
+    add_index "users", ["username"], :name => "index_users_on_username"
     add_index "users", ["persistence_token"], :name => "index_users_on_remember_token"
 
     User.reset_column_information
     Role.reset_column_information
 
     # TODO - delete this
-    # u = User.create!(:login => 'zef', :password => '1111', :password_confirmation => '1111')
+    # u = User.create!(:username => 'zef', :password => '1111', :password_confirmation => '1111')
     # u.has_role!('admin')
   end
 

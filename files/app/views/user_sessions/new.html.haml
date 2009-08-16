@@ -1,9 +1,9 @@
 - form_for @user_session, :url => create_session_path do |f|
   = f.error_messages
   %div
-    = f.label :login
+    = f.label :username
     %br
-    = f.text_field :login, :size => 20
+    = f.text_field :username, :size => 20
   %div
     = f.label :password
     %br
