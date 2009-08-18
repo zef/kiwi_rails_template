@@ -1,7 +1,7 @@
 class CreateUsers < ActiveRecord::Migration
   def self.up
     create_table :users do |t|
-      t.string   :username, :email, :comment, :last_name, :first_name,
+      t.string   :username, :email, :last_name, :first_name,
                  :openid_identifier,
                  :last_login_ip, :current_login_ip, :persistence_token
 
@@ -38,9 +38,6 @@ class CreateUsers < ActiveRecord::Migration
     User.reset_column_information
     Role.reset_column_information
 
-    # TODO - delete this
-    # u = User.create!(:username => 'zef', :password => '1111', :password_confirmation => '1111')
-    # u.has_role!('admin')
   end
 
   def self.down

@@ -22,7 +22,7 @@ class UserSessionsController < ApplicationController
   def destroy
     current_user_session.destroy
     flash[:notice] = "Sign out successful!"
-    redirect_back_or_default sign_out_path
+    redirect_to root_path
   end
 
   protected

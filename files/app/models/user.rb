@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
   acts_as_authorization_subject
 
-  attr_accessible :username, :password, :password_confirmation, :openid_identifier, :first_name, :last_name, :email, :status, :active
+  attr_accessible :username, :password, :password_confirmation, :openid_identifier, :first_name, :last_name, :email, :status, :active, :user_roles
 
   named_scope :active, :conditions => { :active => true }
   named_scope :disabled, :conditions => { :active => false }
@@ -27,8 +27,7 @@ class User < ActiveRecord::Base
       self.roles.member?(get_role(role_name, nil))
     else
       role = get_role(role_name, object)
-      subject_owns_object = object.send(role_name) == self if object.respond_to?(role_name)
-      (role && self.roles.exists?(role.id)) || subject_owns_object
+      (role && self.roles.exists?(role.id)) || (object.respond_to?(role_name) && object.send(role_name) == self)
     end
   end
 
