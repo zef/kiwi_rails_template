@@ -34,7 +34,6 @@ class User < ActiveRecord::Base
   def user_roles=(passed_roles)
     for role in USER_ROLES
       if passed_roles.include?(role)
-        logger.debug { "----- should have role: #{role}" }
         self.has_role!(role)
       else
         self.has_no_role!(role) if has_role?(role)
